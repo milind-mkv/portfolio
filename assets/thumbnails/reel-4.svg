@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="1280" viewBox="0 0 720 1280">
+  <defs>
+    <radialGradient id="grad_reel-4" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#4ADE80" stop-opacity="0.32"/>
+      <stop offset="100%" stop-color="#13231b" stop-opacity="1"/>
+    </radialGradient>
+    <pattern id="grid_reel-4" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="720" height="1280" fill="url(#grad_reel-4)"/>
+  <rect width="720" height="1280" fill="url(#grid_reel-4)"/>
+  <rect width="720" height="1280" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="4"/>
+  
+  <g transform="translate(360, 640)">
+    <circle r="52" fill="rgba(255,255,255,0.06)" stroke="#4ADE80" stroke-width="2.5"/>
+    <polygon points="-12,-20 -12,20 18,0" fill="#4ADE80"/>
+  </g>
+</svg>
