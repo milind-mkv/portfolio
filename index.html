@@ -2437,10 +2437,773 @@
       .mobile-nav-link .nav-title {
         font-size: 20px;
       }
-      .drawer-btn-whatsapp,
-      .drawer-btn-primary {
-        height: 44px;
-        font-size: 13px;
+    /* ========================================================
+       3D DVD ARCHIVES UI (PHYSICAL MEDIA VAULT)
+       ======================================================== */
+    .dvd-section {
+      padding: 100px 0 90px;
+      position: relative;
+      background: radial-gradient(circle at 50% 10%, rgba(163, 126, 232, 0.07) 0%, transparent 65%);
+      overflow: hidden;
+    }
+    .nav-vault-link {
+      color: #A37EE8 !important;
+      font-weight: 600;
+      text-shadow: 0 0 12px rgba(163, 126, 232, 0.4);
+    }
+
+    /* 3D Stage & Shelf */
+    .dvd-stage {
+      margin-top: 48px;
+      position: relative;
+      perspective: 1200px;
+      perspective-origin: 50% 35%;
+      padding-bottom: 24px;
+    }
+    .dvd-shelf-rail {
+      width: 100%;
+      overflow-x: auto;
+      overflow-y: visible;
+      padding: 40px 10px 50px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .dvd-shelf-rail::-webkit-scrollbar {
+      display: none;
+    }
+    .dvd-shelf-track {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 36px;
+      min-width: min-content;
+      transform-style: preserve-3d;
+      padding: 0 15px;
+    }
+
+    /* DVD Item Wrapper */
+    .dvd-item {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+      transform-style: preserve-3d;
+      outline: none;
+    }
+    .dvd-item:focus-visible .dvd-case {
+      box-shadow: 0 0 0 3px #A37EE8, 0 25px 45px rgba(163, 126, 232, 0.45);
+    }
+
+    /* DVD Case Construction (Smoky Acrylic Jewel Case) */
+    .dvd-case {
+      width: 220px;
+      height: 310px;
+      position: relative;
+      transform-style: preserve-3d;
+      transform: rotateY(-18deg) rotateX(4deg) translateZ(0);
+      transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.45s ease;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: #0d0d12;
+      box-shadow: 
+        -10px 15px 30px rgba(0, 0, 0, 0.8),
+        0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+    }
+
+    /* Case Spine (Left Edge Thickness - Real 3D depth) */
+    .case-spine {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 22px;
+      transform-origin: left center;
+      transform: rotateY(-90deg);
+      background: linear-gradient(to right, #09090c, #161622);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 6px 0 0 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 2px;
+      box-shadow: inset -2px 0 6px rgba(0, 0, 0, 0.9);
+      pointer-events: none;
+    }
+    .spine-num {
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #A37EE8;
+    }
+    .spine-title {
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      color: rgba(255, 255, 255, 0.85);
+      white-space: nowrap;
+    }
+    .spine-logo {
+      font-size: 8px;
+      font-weight: 800;
+      color: rgba(255, 255, 255, 0.4);
+      letter-spacing: 0.5px;
+    }
+
+    /* Case Front Cover */
+    .case-front {
+      position: absolute;
+      inset: 0;
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 14px 14px 12px;
+      background: #0d0d12;
+      transform: translateZ(1px);
+      backface-visibility: hidden;
+    }
+
+    /* Holographic & Glass Gloss Overlays */
+    .case-plastic-gloss {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.28) 0%,
+        rgba(255, 255, 255, 0.05) 30%,
+        transparent 55%,
+        rgba(255, 255, 255, 0.12) 100%
+      );
+      z-index: 5;
+      mix-blend-mode: overlay;
+    }
+    .case-holo-sheen {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(
+        115deg,
+        transparent 20%,
+        rgba(255, 0, 128, 0.12) 35%,
+        rgba(0, 230, 255, 0.14) 50%,
+        rgba(163, 126, 232, 0.18) 65%,
+        transparent 80%
+      );
+      background-size: 200% 200%;
+      background-position: 0% 0%;
+      z-index: 6;
+      opacity: 0.4;
+      transition: opacity 0.4s ease, background-position 0.6s ease;
+      mix-blend-mode: color-dodge;
+    }
+
+    /* Case Cover Typography & Art */
+    .case-header {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      padding-bottom: 8px;
+    }
+    .case-badge {
+      font-size: 8.5px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: #A37EE8;
+      text-transform: uppercase;
+      background: rgba(163, 126, 232, 0.12);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .case-codec {
+      font-size: 7.5px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    .case-cover-art {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.68) saturate(1.15) contrast(1.05);
+      transition: filter 0.4s ease, transform 0.5s ease;
+      z-index: 1;
+    }
+    .case-cover-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(10, 10, 14, 0.82) 0%,
+        rgba(10, 10, 14, 0.25) 45%,
+        rgba(10, 10, 14, 0.95) 100%
+      );
+    }
+
+    .case-footer {
+      position: relative;
+      z-index: 3;
+      margin-top: auto;
+    }
+    .case-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      color: #fff;
+      line-height: 1.25;
+      text-transform: uppercase;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+    }
+    .case-meta {
+      font-size: 9px;
+      color: rgba(255, 255, 255, 0.65);
+      margin-top: 3px;
+      line-height: 1.3;
+    }
+
+    .case-barcode {
+      position: relative;
+      z-index: 3;
+      margin-top: 8px;
+      padding-top: 6px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .barcode-lines {
+      height: 12px;
+      width: 58px;
+      background: repeating-linear-gradient(
+        90deg,
+        #fff 0,
+        #fff 1px,
+        transparent 1px,
+        transparent 3px,
+        #fff 3px,
+        #fff 5px,
+        transparent 5px,
+        transparent 7px
+      );
+      opacity: 0.6;
+    }
+    .case-barcode span {
+      font-family: monospace;
+      font-size: 7px;
+      letter-spacing: 1px;
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    /* 3D Shiny Metallic DVD Disc (Hidden inside case, slides out on active/hover) */
+    .dvd-disc {
+      position: absolute;
+      top: 25px;
+      right: 0;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(
+        circle at 50% 50%,
+        #050507 0%,
+        #0b0b10 18%,
+        #1b172a 20%,
+        #35295c 32%,
+        #0b0b10 40%,
+        #1c1c24 60%,
+        #3e2b6e 78%,
+        #0a0a0e 100%
+      );
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow: 
+        0 10px 25px rgba(0, 0, 0, 0.8),
+        inset 0 0 20px rgba(163, 126, 232, 0.35);
+      transform: translate3d(0, 0, -2px) rotate(0deg);
+      transition: transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1.1), opacity 0.4s ease;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .dvd-disc::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: conic-gradient(
+        from 0deg,
+        rgba(255, 0, 128, 0.2) 0deg,
+        rgba(0, 230, 255, 0.25) 60deg,
+        transparent 120deg,
+        rgba(163, 126, 232, 0.3) 180deg,
+        rgba(255, 220, 0, 0.2) 240deg,
+        transparent 300deg,
+        rgba(255, 0, 128, 0.2) 360deg
+      );
+      mix-blend-mode: color-dodge;
+      opacity: 0.7;
+    }
+    .disc-grooves {
+      position: absolute;
+      inset: 12px;
+      border-radius: 50%;
+      border: 1px dashed rgba(255, 255, 255, 0.12);
+      box-shadow: 
+        inset 0 0 0 16px rgba(0, 0, 0, 0.2),
+        inset 0 0 0 32px rgba(255, 255, 255, 0.04);
+      pointer-events: none;
+    }
+    .disc-hole {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #080808;
+      border: 4px solid rgba(255, 255, 255, 0.18);
+      box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.9);
+      position: relative;
+      z-index: 3;
+    }
+    .disc-label {
+      position: absolute;
+      top: 24px;
+      text-align: center;
+      z-index: 3;
+      font-family: 'Space Grotesk', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .disc-label span {
+      display: block;
+      font-size: 7px;
+      color: #A37EE8;
+      font-weight: 700;
+    }
+    .disc-label strong {
+      display: block;
+      font-size: 9.5px;
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    /* Realistic Contact Shadow on Shelf */
+    .dvd-case-shadow {
+      width: 200px;
+      height: 18px;
+      background: radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0.85) 0%, transparent 70%);
+      margin-top: 14px;
+      filter: blur(4px);
+      transform: rotateX(75deg);
+      transition: transform 0.45s ease, opacity 0.45s ease;
+    }
+
+    /* DVD Category Pill Indicator */
+    .dvd-label-pill {
+      margin-top: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.3px;
+      transition: all 0.35s ease;
+    }
+    .pill-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transition: background 0.35s ease;
+    }
+
+    /* Shelf Floor Mirror Gradient */
+    .dvd-floor-reflection {
+      height: 2px;
+      width: 85%;
+      max-width: 900px;
+      margin: -25px auto 0;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(163, 126, 232, 0.28) 25%,
+        rgba(255, 255, 255, 0.35) 50%,
+        rgba(163, 126, 232, 0.28) 75%,
+        transparent
+      );
+      box-shadow: 0 4px 20px rgba(163, 126, 232, 0.3);
+      border-radius: 50%;
+    }
+
+    /* --- HOVER & ACTIVE 3D INTERACTION --- */
+    .dvd-item:hover .dvd-case {
+      transform: rotateY(-10deg) rotateX(1deg) translateY(-14px) scale(1.03);
+      box-shadow: 
+        -15px 25px 40px rgba(0, 0, 0, 0.9),
+        0 0 25px rgba(163, 126, 232, 0.25);
+    }
+    .dvd-item:hover .case-holo-sheen {
+      opacity: 0.75;
+      background-position: 80% 80%;
+    }
+    .dvd-item:hover .case-cover-art {
+      filter: brightness(0.85) saturate(1.25);
+    }
+    .dvd-item:hover .dvd-case-shadow {
+      transform: rotateX(75deg) scale(1.15);
+      opacity: 0.6;
+    }
+    .dvd-item:hover .dvd-label-pill {
+      color: #fff;
+      border-color: rgba(163, 126, 232, 0.4);
+      background: rgba(163, 126, 232, 0.12);
+    }
+    .dvd-item:hover .pill-dot {
+      background: #A37EE8;
+    }
+
+    /* Active Selected Case State (Disc slides out!) */
+    .dvd-item.active .dvd-case {
+      transform: rotateY(0deg) rotateX(0deg) translateY(-20px) translateZ(40px) scale(1.06);
+      box-shadow: 
+        0 30px 60px rgba(0, 0, 0, 0.95),
+        0 0 35px rgba(163, 126, 232, 0.45);
+      border-color: rgba(163, 126, 232, 0.5);
+    }
+    .dvd-item.active .case-holo-sheen {
+      opacity: 0.9;
+      background-position: 100% 100%;
+    }
+    .dvd-item.active .dvd-disc {
+      opacity: 1;
+      transform: translate3d(70px, -15px, -1px) rotate(45deg);
+      box-shadow: 
+        15px 20px 35px rgba(0, 0, 0, 0.9),
+        inset 0 0 25px rgba(163, 126, 232, 0.5);
+    }
+    .dvd-item.active .dvd-label-pill {
+      color: #fff;
+      background: #A37EE8;
+      border-color: #A37EE8;
+      box-shadow: 0 0 16px rgba(163, 126, 232, 0.5);
+    }
+    .dvd-item.active .pill-dot {
+      background: #fff;
+    }
+
+    /* ========================================================
+       HYBRID DRAWER CONTAINER (VIDEO EPISODES SHOWCASE)
+       ======================================================== */
+    .dvd-drawer-container {
+      margin-top: 45px;
+      position: relative;
+    }
+    .dvd-drawer-panel {
+      display: none;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+      background: linear-gradient(180deg, rgba(17, 17, 24, 0.75) 0%, rgba(11, 11, 15, 0.92) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+    .dvd-drawer-panel.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Drawer Header */
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 30px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 22px;
+      gap: 20px;
+    }
+    .drawer-vol-chip {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: #A37EE8;
+      background: rgba(163, 126, 232, 0.12);
+      border: 1px solid rgba(163, 126, 232, 0.3);
+      padding: 3px 10px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+    .drawer-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(22px, 3vw, 28px);
+      font-weight: 700;
+      letter-spacing: -0.8px;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .drawer-sub {
+      font-size: 13.5px;
+      color: var(--muted);
+      max-width: 600px;
+      line-height: 1.5;
+    }
+    .drawer-count {
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.5);
+      background: rgba(255, 255, 255, 0.06);
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      white-space: nowrap;
+    }
+
+    /* Drawer Grids */
+    .drawer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .drawer-grid-vertical {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .drawer-grid-ai {
+      grid-template-columns: 1.4fr 1fr;
+      align-items: start;
+    }
+    .drawer-grid-long {
+      grid-template-columns: 1fr;
+    }
+
+    /* Drawer Project Card */
+    .drawer-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      outline: none;
+    }
+    .drawer-card:hover,
+    .drawer-card:focus-visible {
+      transform: translateY(-6px);
+      border-color: rgba(163, 126, 232, 0.5);
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.6), 0 0 20px rgba(163, 126, 232, 0.2);
+    }
+    .drawer-card-thumb {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: #000;
+    }
+    .drawer-card-vertical .drawer-card-thumb {
+      aspect-ratio: 9 / 16;
+      max-height: 380px;
+    }
+    .drawer-card-featured .drawer-card-thumb {
+      aspect-ratio: 21 / 9;
+      max-height: 440px;
+    }
+    .drawer-card-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.45s ease;
+    }
+    .drawer-card:hover .drawer-card-thumb img {
+      transform: scale(1.05);
+    }
+    .drawer-card-thumb .preview-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      pointer-events: none;
+    }
+    .drawer-card:hover .preview-video {
+      opacity: 1;
+    }
+    .drawer-play-badge {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      transition: background 0.3s ease, transform 0.3s ease;
+      z-index: 3;
+    }
+    .drawer-card:hover .drawer-play-badge {
+      background: #A37EE8;
+      transform: scale(1.12);
+      border-color: #A37EE8;
+    }
+    .drawer-card-tag {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      z-index: 3;
+    }
+
+    .drawer-card-info {
+      padding: 14px 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .drawer-card-info h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.3;
+    }
+    .drawer-card-info p {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    /* --- RESPONSIVE ADAPTATIONS (MOBILE STACKED TOUCH CARDS) --- */
+    @media (max-width: 1024px) {
+      .drawer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .drawer-grid-vertical {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .drawer-grid-ai {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .dvd-section {
+        padding: 70px 0 60px;
+      }
+      .dvd-stage {
+        perspective: none; /* Switch from 3D depth to mobile isometric stack */
+        padding-bottom: 10px;
+      }
+      .dvd-shelf-rail {
+        padding: 20px 8px 30px;
+      }
+      .dvd-shelf-track {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        min-width: 100%;
+      }
+      .dvd-item {
+        width: 100%;
+        max-width: 340px;
+      }
+      .dvd-case {
+        width: 100%;
+        height: 120px;
+        transform: none !important;
+        display: flex;
+        flex-direction: row;
+        border-radius: 12px;
+      }
+      .case-spine {
+        width: 14px;
+        transform: none;
+        position: relative;
+        border-radius: 10px 0 0 10px;
+      }
+      .spine-title {
+        display: none;
+      }
+      .case-front {
+        position: relative;
+        flex: 1;
+        border-radius: 0 10px 10px 0;
+        padding: 12px 14px;
+      }
+      .dvd-disc {
+        display: none; /* Hide spinning disc on compact mobile view for clean performance */
+      }
+      .dvd-case-shadow {
+        display: none;
+      }
+      .dvd-label-pill {
+        display: none; /* Already indicated clearly in the expanded card */
+      }
+      .case-barcode {
+        display: none;
+      }
+      .dvd-floor-reflection {
+        display: none;
+      }
+      .dvd-drawer-panel {
+        padding: 22px 16px;
+        border-radius: 16px;
+      }
+      .drawer-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .drawer-grid-vertical {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+      .drawer-header {
+        flex-direction: column;
+        gap: 12px;
       }
     }
   </style>
@@ -2458,6 +3221,7 @@
       <a class="logo" href="#">MILIND<span>.</span></a>
 
       <ul class="nav-links">
+        <li><a href="#archives" class="nav-vault-link">Archives 💿</a></li>
         <li><a href="#work">Work</a></li>
         <li><a href="#reels">Reels</a></li>
         <li><a href="#ai">AI Studio</a></li>
@@ -2493,6 +3257,15 @@
         </div>
 
         <ul class="mobile-nav-list">
+          <li class="mobile-nav-item">
+            <a href="#archives" class="mobile-nav-link mobile-link">
+              <div class="nav-left">
+                <span class="nav-num">00</span>
+                <span class="nav-title">DVD Archives</span>
+              </div>
+              <span class="nav-arrow">→</span>
+            </a>
+          </li>
           <li class="mobile-nav-item">
             <a href="#work" class="mobile-nav-link mobile-link">
               <div class="nav-left">
@@ -2589,16 +3362,415 @@
       <p class="reveal">
         I turn raw footage and creative ideas into engaging, platform-ready content through high-retention pacing, motion graphics, and AI-assisted workflows.
       </p>
-      <div class="actions reveal">
-        <a class="btn primary" href="#work">View Selected Work ↓</a>
-        <a class="btn whatsapp" href="https://wa.me/918422072684?text=Hi%20Milind%2C%20I'm%20interested%20in%20working%20with%20you!" target="_blank" rel="noopener">
-          <svg class="btn-icon" viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 14.99 3.81 13.47 3.81 11.91C3.81 7.37 7.5 3.67 12.05 3.67M9.04 7.64C8.86 7.64 8.57 7.71 8.33 7.97C8.09 8.23 7.42 8.86 7.42 10.14C7.42 11.42 8.35 12.65 8.48 12.82C8.61 13 10.3 15.61 12.9 16.73C13.52 17 14 17.16 14.38 17.28C15 17.48 15.55 17.45 15.99 17.39C16.48 17.31 17.5 16.77 17.71 16.18C17.92 15.59 17.92 15.08 17.86 14.98C17.79 14.88 17.62 14.82 17.36 14.69C17.11 14.56 15.86 13.95 15.63 13.87C15.4 13.78 15.23 13.74 15.06 13.99C14.89 14.25 14.4 14.82 14.25 14.99C14.1 15.16 13.95 15.18 13.7 15.06C13.44 14.93 12.62 14.66 11.64 13.79C10.88 13.11 10.36 12.27 10.21 12.02C10.06 11.76 10.19 11.63 10.32 11.5C10.44 11.38 10.59 11.19 10.72 11.04C10.85 10.89 10.89 10.78 10.98 10.61C11.06 10.44 11.02 10.3 10.96 10.17C10.89 10.05 10.4 8.84 10.19 8.35C9.99 7.87 9.78 7.93 9.63 7.92C9.48 7.92 9.31 7.91 9.14 7.91L9.04 7.64Z"/></svg>
-          Chat on WhatsApp
-        </a>
-        <a class="btn secondary" href="#contact">Let's Work Together</a>
+  <!-- 3D Physical Archives Shelf (DVD Edition) -->
+  <section id="archives" class="dvd-section">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          <div class="label">Physical Media Archives</div>
+          <h2 class="section-title">Select a Vault.</h2>
+        </div>
+        <p class="section-copy">
+          Curated physical DVD editions across 4 editing formats. Hover to inspect 3D case, click to slide out the disc and explore all projects.
+        </p>
+      </div>
+
+      <!-- 3D Shelf Stage -->
+      <div class="dvd-stage reveal">
+        <div class="dvd-shelf-rail">
+          <div class="dvd-shelf-track" id="dvdTrack">
+
+            <!-- CASE 01: Commercial & 3D -->
+            <div class="dvd-item active" data-case="commercial" tabindex="0" role="button" aria-expanded="true" aria-controls="drawer-commercial">
+              <div class="dvd-case">
+                <!-- Case Spine (Left Edge Thickness) -->
+                <div class="case-spine">
+                  <span class="spine-num">VOL. 01</span>
+                  <span class="spine-title">COMMERCIAL & 3D</span>
+                  <span class="spine-logo">DVD</span>
+                </div>
+                <!-- Case Front Cover -->
+                <div class="case-front">
+                  <div class="case-plastic-gloss"></div>
+                  <div class="case-holo-sheen"></div>
+                  <div class="case-header">
+                    <span class="case-badge">ARCHIVE 01</span>
+                    <span class="case-codec">4K UHD / 60FPS</span>
+                  </div>
+                  <div class="case-cover-art" style="background-image: url('assets/thumbnails/headphone.png');">
+                    <div class="case-cover-overlay"></div>
+                  </div>
+                  <div class="case-footer">
+                    <div class="case-title">COMMERCIAL & 3D</div>
+                    <div class="case-meta">4 Selected Works • 3D Motion • Ads</div>
+                  </div>
+                  <div class="case-barcode">
+                    <div class="barcode-lines"></div>
+                    <span>MILIND-COMM-01</span>
+                  </div>
+                </div>
+                <!-- Hidden Sliding Disc inside case -->
+                <div class="dvd-disc">
+                  <div class="disc-hole"></div>
+                  <div class="disc-label">
+                    <span>VOL 01</span>
+                    <strong>COMMERCIAL</strong>
+                  </div>
+                  <div class="disc-grooves"></div>
+                </div>
+              </div>
+              <div class="dvd-case-shadow"></div>
+              <div class="dvd-label-pill">
+                <span class="pill-dot"></span>
+                <span>01. Commercial & 3D</span>
+              </div>
+            </div>
+
+            <!-- CASE 02: Short-Form & Reels -->
+            <div class="dvd-item" data-case="reels" tabindex="0" role="button" aria-expanded="false" aria-controls="drawer-reels">
+              <div class="dvd-case">
+                <div class="case-spine">
+                  <span class="spine-num">VOL. 02</span>
+                  <span class="spine-title">SHORT-FORM REELS</span>
+                  <span class="spine-logo">9:16</span>
+                </div>
+                <div class="case-front">
+                  <div class="case-plastic-gloss"></div>
+                  <div class="case-holo-sheen"></div>
+                  <div class="case-header">
+                    <span class="case-badge">ARCHIVE 02</span>
+                    <span class="case-codec">9:16 VERTICAL</span>
+                  </div>
+                  <div class="case-cover-art" style="background-image: url('assets/thumbnails/reel-1.png');">
+                    <div class="case-cover-overlay"></div>
+                  </div>
+                  <div class="case-footer">
+                    <div class="case-title">SHORT-FORM & REELS</div>
+                    <div class="case-meta">4 Viral Cuts • Fast Pacing • Retention</div>
+                  </div>
+                  <div class="case-barcode">
+                    <div class="barcode-lines"></div>
+                    <span>MILIND-REELS-02</span>
+                  </div>
+                </div>
+                <div class="dvd-disc">
+                  <div class="disc-hole"></div>
+                  <div class="disc-label">
+                    <span>VOL 02</span>
+                    <strong>REELS</strong>
+                  </div>
+                  <div class="disc-grooves"></div>
+                </div>
+              </div>
+              <div class="dvd-case-shadow"></div>
+              <div class="dvd-label-pill">
+                <span class="pill-dot"></span>
+                <span>02. Shorts & Reels</span>
+              </div>
+            </div>
+
+            <!-- CASE 03: AI Filmmaking & Animation -->
+            <div class="dvd-item" data-case="ai" tabindex="0" role="button" aria-expanded="false" aria-controls="drawer-ai">
+              <div class="dvd-case">
+                <div class="case-spine">
+                  <span class="spine-num">VOL. 03</span>
+                  <span class="spine-title">AI CINEMATICS</span>
+                  <span class="spine-logo">AI</span>
+                </div>
+                <div class="case-front">
+                  <div class="case-plastic-gloss"></div>
+                  <div class="case-holo-sheen"></div>
+                  <div class="case-header">
+                    <span class="case-badge">ARCHIVE 03</span>
+                    <span class="case-codec">GEN-AI / 3D VFX</span>
+                  </div>
+                  <div class="case-cover-art" style="background-image: url('assets/thumbnails/dog-ai.png');">
+                    <div class="case-cover-overlay"></div>
+                  </div>
+                  <div class="case-footer">
+                    <div class="case-title">AI FILMS & VFX</div>
+                    <div class="case-meta">2 AI Stories • Character & Cinematic</div>
+                  </div>
+                  <div class="case-barcode">
+                    <div class="barcode-lines"></div>
+                    <span>MILIND-AIVFX-03</span>
+                  </div>
+                </div>
+                <div class="dvd-disc">
+                  <div class="disc-hole"></div>
+                  <div class="disc-label">
+                    <span>VOL 03</span>
+                    <strong>AI FILMS</strong>
+                  </div>
+                  <div class="disc-grooves"></div>
+                </div>
+              </div>
+              <div class="dvd-case-shadow"></div>
+              <div class="dvd-label-pill">
+                <span class="pill-dot"></span>
+                <span>03. AI Studio</span>
+              </div>
+            </div>
+
+            <!-- CASE 04: Long-Form Storytelling -->
+            <div class="dvd-item" data-case="longform" tabindex="0" role="button" aria-expanded="false" aria-controls="drawer-longform">
+              <div class="dvd-case">
+                <div class="case-spine">
+                  <span class="spine-num">VOL. 04</span>
+                  <span class="spine-title">LONG-FORM STORY</span>
+                  <span class="spine-logo">DOC</span>
+                </div>
+                <div class="case-front">
+                  <div class="case-plastic-gloss"></div>
+                  <div class="case-holo-sheen"></div>
+                  <div class="case-header">
+                    <span class="case-badge">ARCHIVE 04</span>
+                    <span class="case-codec">1080P MASTER</span>
+                  </div>
+                  <div class="case-cover-art" style="background-image: url('assets/thumbnails/long-form.png');">
+                    <div class="case-cover-overlay"></div>
+                  </div>
+                  <div class="case-footer">
+                    <div class="case-title">LONG-FORM BREAKDOWN</div>
+                    <div class="case-meta">1 In-Depth Feature • YouTube Retention</div>
+                  </div>
+                  <div class="case-barcode">
+                    <div class="barcode-lines"></div>
+                    <span>MILIND-LONG-04</span>
+                  </div>
+                </div>
+                <div class="dvd-disc">
+                  <div class="disc-hole"></div>
+                  <div class="disc-label">
+                    <span>VOL 04</span>
+                    <strong>LONG-FORM</strong>
+                  </div>
+                  <div class="disc-grooves"></div>
+                </div>
+              </div>
+              <div class="dvd-case-shadow"></div>
+              <div class="dvd-label-pill">
+                <span class="pill-dot"></span>
+                <span>04. Long-Form</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Shelf Reflection Floor -->
+        <div class="dvd-floor-reflection"></div>
+      </div>
+
+      <!-- Dynamic Video Drawer (Reveals Selected Category Projects) -->
+      <div class="dvd-drawer-container reveal" id="dvdDrawerContainer">
+
+        <!-- DRAWER 1: Commercial & 3D -->
+        <div class="dvd-drawer-panel active" id="drawer-commercial" data-panel="commercial">
+          <div class="drawer-header">
+            <div class="drawer-header-left">
+              <span class="drawer-vol-chip">DISC 01 • COMMERCIAL & 3D</span>
+              <h3 class="drawer-title">Product Visuals & Motion Graphics</h3>
+              <p class="drawer-sub">High-impact 3D camera projections, sound-designed product reveals, and kinetic typography.</p>
+            </div>
+            <div class="drawer-header-right">
+              <span class="drawer-count">4 Episodes</span>
+            </div>
+          </div>
+          <div class="drawer-grid">
+            <article class="drawer-card" data-yt="oa4C3DGgJHs" data-title="3D Headphone Advertisement" data-tag="Commercial & 3D" role="button" tabindex="0">
+              <div class="drawer-card-thumb">
+                <img src="assets/thumbnails/headphone.png" alt="3D Headphone Advertisement" loading="lazy">
+                <video class="preview-video" muted loop playsinline preload="none"></video>
+                <div class="drawer-play-badge">▶</div>
+                <span class="drawer-card-tag">3D Render</span>
+              </div>
+              <div class="drawer-card-info">
+                <h4>3D Headphone Advertisement</h4>
+                <p>Metallic reflections, beat-synced pacing, and 3D camera moves.</p>
+              </div>
+            </article>
+
+            <article class="drawer-card" data-yt="zzP6iJF2Av4" data-title="3D Text Integration" data-tag="Motion Graphics" role="button" tabindex="0">
+              <div class="drawer-card-thumb">
+                <img src="assets/thumbnails/3d-text.png" alt="3D Text Integration" loading="lazy">
+                <video class="preview-video" muted loop playsinline preload="none"></video>
+                <div class="drawer-play-badge">▶</div>
+                <span class="drawer-card-tag">Camera Tracking</span>
+              </div>
+              <div class="drawer-card-info">
+                <h4>3D Text Integration</h4>
+                <p>Drone tracking with physical depth shadowing in the canyon.</p>
+              </div>
+            </article>
+
+            <article class="drawer-card" data-yt="ZIRuXJMTtb8" data-title="Kinetic Typography & Motion Graphics" data-tag="Motion Graphics" role="button" tabindex="0">
+              <div class="drawer-card-thumb">
+                <img src="assets/thumbnails/text-animation.png" alt="Text Animation" loading="lazy">
+                <video class="preview-video" muted loop playsinline preload="none"></video>
+                <div class="drawer-play-badge">▶</div>
+                <span class="drawer-card-tag">Typography</span>
+              </div>
+              <div class="drawer-card-info">
+                <h4>Kinetic Typography & Motion</h4>
+                <p>Rhythm-locked kinetic typography and punchy SFX design.</p>
+              </div>
+            </article>
+
+            <article class="drawer-card" data-yt="VL3vv8gXk4I" data-title="Pluto 1.2 | Tech Product Commercial" data-tag="Commercial & 3D" role="button" tabindex="0">
+              <div class="drawer-card-thumb">
+                <img src="assets/thumbnails/product-video.png" alt="Product Video" loading="lazy">
+                <video class="preview-video" muted loop playsinline preload="none"></video>
+                <div class="drawer-play-badge">▶</div>
+                <span class="drawer-card-tag">Brand Commercial</span>
+              </div>
+              <div class="drawer-card-info">
+                <h4>Pluto 1.2 | Product Commercial</h4>
+                <p>Minimalist high-converting hardware product commercial.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- DRAWER 2: Short-Form & Reels -->
+        <div class="dvd-drawer-panel" id="drawer-reels" data-panel="reels">
+          <div class="drawer-header">
+            <div class="drawer-header-left">
+              <span class="drawer-vol-chip">DISC 02 • SHORT-FORM REELS</span>
+              <h3 class="drawer-title">Built for Vertical Retention (9:16)</h3>
+              <p class="drawer-sub">Short-form videos designed for Instagram Reels & YouTube Shorts with aggressive retention hooks.</p>
+            </div>
+            <div class="drawer-header-right">
+              <span class="drawer-count">4 Episodes</span>
+            </div>
+          </div>
+          <div class="drawer-grid drawer-grid-vertical">
+            <article class="drawer-card drawer-card-vertical" data-yt="-FpGpPvcNLA" data-vertical="true" data-title="Talk, I'll Make It Watchable" data-tag="Short-Form Reel" role="button" tabindex="0">
+              <div class="drawer-card-thumb">
+                <img src="assets/thumbnails/reel-1.png" alt="Talk, I'll make it watchable" loading="lazy">
+                <video class="preview-video" muted loop playsinline preload="none"></video>
+                <div class="drawer-play-badge">▶</div>
+                <span class="drawer-card-tag">9:16 Reel</span>
+              </div>
+              <div class="drawer-card-info">
+                <h4>Talk, I'll Make It Watchable</h4>
+                <p>Podcast talking-head with dynamic b-roll and sound pacing.</p>
+              </div>
+            </article>
+
+            <article class="drawer-card drawer-card-vertical" data-yt="DlLUP3O3hOA" data-vertical="true" data-title="Real Talk, Unreal Editing" data-tag="Short-Form Reel" role="button" tabindex="0">
+              <div class="drawer-card-thumb">
+                <img src="assets/thumbnails/reel-2.png" alt="Real talk, unreal editing" loading="lazy">
+                <video class="preview-video" muted loop playsinline preload="none"></video>
+                <div class="drawer-play-badge">▶</div>
+                <span class="drawer-card-tag">9:16 Reel</span>
+              </div>
+              <div class="drawer-card-info">
+                <h4>Real Talk, Unreal Editing</h4>
+                <p>Snappy visual punches and quick-cut pacing for high retention.</p>
+              </div>
+            </article>
+
+            <article class="drawer-card drawer-card-vertical" data-yt="iBNQA-suaXU" data-vertical="true" data-title="One Video, More to Watch" data-tag="Short-Form Reel" role="button" tabindex="0">
+              <div class="drawer-card-thumb">
+                <img src="assets/thumbnails/reel-3.png" alt="One video, more to watch" loading="lazy">
+                <video class="preview-video" muted loop playsinline preload="none"></video>
+                <div class="drawer-play-badge">▶</div>
+                <span class="drawer-card-tag">9:16 Reel</span>
+              </div>
+              <div class="drawer-card-info">
+                <h4>One Video, More to Watch</h4>
+                <p>Loop-optimized seamless storytelling structure.</p>
+              </div>
+            </article>
+
+            <article class="drawer-card drawer-card-vertical" data-yt="w6oqZXeFnzs" data-vertical="true" data-title="Boring? Not Anymore" data-tag="Short-Form Reel" role="button" tabindex="0">
+              <div class="drawer-card-thumb">
+                <img src="assets/thumbnails/reel-4.png" alt="Boring? Not anymore" loading="lazy">
+                <video class="preview-video" muted loop playsinline preload="none"></video>
+                <div class="drawer-play-badge">▶</div>
+                <span class="drawer-card-tag">9:16 Reel</span>
+              </div>
+              <div class="drawer-card-info">
+                <h4>Boring? Not Anymore</h4>
+                <p>Instant 2-second visual hook with sound design elevation.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- DRAWER 3: AI Creative Studio -->
+        <div class="dvd-drawer-panel" id="drawer-ai" data-panel="ai">
+          <div class="drawer-header">
+            <div class="drawer-header-left">
+              <span class="drawer-vol-chip">DISC 03 • AI CINEMATICS</span>
+              <h3 class="drawer-title">Generative AI Filmmaking & Animation</h3>
+              <p class="drawer-sub">Narrative world-building blending Midjourney, Runway, and After Effects motion design.</p>
+            </div>
+            <div class="drawer-header-right">
+              <span class="drawer-count">2 Episodes</span>
+            </div>
+          </div>
+          <div class="drawer-grid drawer-grid-ai">
+            <article class="drawer-card" data-yt="ywopAiq9j9w" data-title="He Didn't Know It Was The Last Time" data-tag="AI Cinematic Film" role="button" tabindex="0">
+              <div class="drawer-card-thumb">
+                <img src="assets/thumbnails/dog-ai.png" alt="He Didn't Know It Was The Last Time" loading="lazy">
+                <video class="preview-video" muted loop playsinline preload="none"></video>
+                <div class="drawer-play-badge">▶</div>
+                <span class="drawer-card-tag">16:9 AI Film</span>
+              </div>
+              <div class="drawer-card-info">
+                <h4>He Didn't Know It Was The Last Time</h4>
+                <p>Emotional narrative with cinematic lighting and atmospheric grading.</p>
+              </div>
+            </article>
+
+            <article class="drawer-card drawer-card-vertical" data-yt="Hw6iu8Fzmew" data-vertical="true" data-title="Mushak and Ganesh Conversation" data-tag="AI Short Reel" role="button" tabindex="0">
+              <div class="drawer-card-thumb">
+                <img src="assets/thumbnails/mushak-short.png" alt="Mushak and Ganesh Conversation" loading="lazy">
+                <video class="preview-video" muted loop playsinline preload="none"></video>
+                <div class="drawer-play-badge">▶</div>
+                <span class="drawer-card-tag">9:16 3D Short</span>
+              </div>
+              <div class="drawer-card-info">
+                <h4>A Conversation with Bappa</h4>
+                <p>Whimsical 3D character animation with smooth sound choreography.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- DRAWER 4: Long-Form Storytelling -->
+        <div class="dvd-drawer-panel" id="drawer-longform" data-panel="longform">
+          <div class="drawer-header">
+            <div class="drawer-header-left">
+              <span class="drawer-vol-chip">DISC 04 • LONG-FORM STORYTELLING</span>
+              <h3 class="drawer-title">Deep-Dive Documentary & YouTube Retention</h3>
+              <p class="drawer-sub">10-minute long-form breakdown structured to keep audience attention graphs consistently high.</p>
+            </div>
+            <div class="drawer-header-right">
+              <span class="drawer-count">1 Feature Master</span>
+            </div>
+          </div>
+          <div class="drawer-grid drawer-grid-long">
+            <article class="drawer-card drawer-card-featured" data-yt="JPfmrpeosgI" data-title="Long-Form Video Breakdown" data-tag="Long-Form Feature" role="button" tabindex="0">
+              <div class="drawer-card-thumb">
+                <img src="assets/thumbnails/long-form.png" alt="Long-Form Breakdown" loading="lazy">
+                <video class="preview-video" muted loop playsinline preload="none"></video>
+                <div class="drawer-play-badge">▶</div>
+                <span class="drawer-card-tag">10 Min Master</span>
+              </div>
+              <div class="drawer-card-info">
+                <h4>Long-Form Video Breakdown</h4>
+                <p>Structural narrative pacing, multi-layer visual analogies, chapter transitions, and studio-grade audio mixing.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+
       </div>
     </div>
-  </header>
+  </section>
 
   <!-- Selected Work Grid Section -->
   <section id="work">
@@ -4182,6 +5354,134 @@
         el.classList.add('show');
       }
       observer.observe(el);
+    });
+
+    /* ========================================================
+       8. 3D DVD ARCHIVES INTERACTIVE ENGINE
+       ======================================================== */
+    const dvdItems = document.querySelectorAll('.dvd-item');
+    const drawerPanels = document.querySelectorAll('.dvd-drawer-panel');
+    const dvdTrack = document.getElementById('dvdTrack');
+
+    // Function to switch active DVD case and corresponding drawer
+    function selectDvdCase(caseName) {
+      if (!caseName) return;
+
+      // Update DVD items
+      dvdItems.forEach(item => {
+        const isMatch = item.dataset.case === caseName;
+        item.classList.toggle('active', isMatch);
+        item.setAttribute('aria-expanded', isMatch ? 'true' : 'false');
+      });
+
+      // Update drawer panels
+      drawerPanels.forEach(panel => {
+        const isMatch = panel.dataset.panel === caseName;
+        panel.classList.toggle('active', isMatch);
+      });
+    }
+
+    // DVD Item Click / Keyboard triggers
+    dvdItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const caseName = item.dataset.case;
+        selectDvdCase(caseName);
+      });
+
+      item.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          selectDvdCase(item.dataset.case);
+        }
+      });
+
+      // Desktop 3D Mouse Parallax & Dynamic Light Tilt
+      item.addEventListener('mousemove', (e) => {
+        if (window.innerWidth <= 768) return; // Skip on mobile
+        const rect = item.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        // Calculate subtle angles
+        const rotateY = ((x - centerX) / centerX) * 12; // -12 to 12 deg
+        const rotateX = -((y - centerY) / centerY) * 10; // -10 to 10 deg
+
+        const dvdCase = item.querySelector('.dvd-case');
+        const holo = item.querySelector('.case-holo-sheen');
+
+        if (dvdCase && !item.classList.contains('active')) {
+          dvdCase.style.transform = `rotateY(${rotateY - 14}deg) rotateX(${rotateX + 2}deg) translateY(-14px) scale(1.03)`;
+        } else if (dvdCase && item.classList.contains('active')) {
+          dvdCase.style.transform = `rotateY(${rotateY}deg) rotateX(${rotateX}deg) translateY(-20px) translateZ(40px) scale(1.06)`;
+        }
+
+        // Move holographic reflection gradient
+        if (holo) {
+          const posX = (x / rect.width) * 100;
+          const posY = (y / rect.height) * 100;
+          holo.style.backgroundPosition = `${posX}% ${posY}%`;
+        }
+      });
+
+      item.addEventListener('mouseleave', () => {
+        const dvdCase = item.querySelector('.dvd-case');
+        const holo = item.querySelector('.case-holo-sheen');
+        if (dvdCase) {
+          dvdCase.style.transform = '';
+        }
+        if (holo) {
+          holo.style.backgroundPosition = '';
+        }
+      });
+    });
+
+    // Drawer Video Card Click -> Launch Custom Player
+    const drawerCards = document.querySelectorAll('.drawer-card[data-yt]');
+    drawerCards.forEach(card => {
+      card.addEventListener('click', (e) => {
+        const ytId = card.dataset.yt;
+        const isVertical = card.dataset.vertical === 'true';
+        const title = card.dataset.title;
+        const tag = card.dataset.tag;
+        openModal(ytId, isVertical, title, tag);
+      });
+
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          const ytId = card.dataset.yt;
+          const isVertical = card.dataset.vertical === 'true';
+          const title = card.dataset.title;
+          const tag = card.dataset.tag;
+          openModal(ytId, isVertical, title, tag);
+        }
+      });
+
+      // Hover preview video playback inside drawer
+      const video = card.querySelector('.preview-video');
+      if (video) {
+        card.addEventListener('mouseenter', () => {
+          // If video preview src not set, pick from matching card
+          if (!video.src) {
+            const matchCard = document.querySelector(`article[data-yt="${card.dataset.yt}"][data-preview]`);
+            if (matchCard && matchCard.dataset.preview) {
+              video.src = matchCard.dataset.preview;
+            }
+          }
+          if (video.src) {
+            video.play().catch(() => {});
+          }
+        });
+
+        card.addEventListener('mouseleave', () => {
+          if (video.src) {
+            video.pause();
+            video.currentTime = 0;
+          }
+        });
+      }
     });
   </script>
 
